@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Vulkan">
+      <UniqueIdentifier>{7fa86286-bea7-4ab7-a90c-97f1c9e651b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL">
+      <UniqueIdentifier>{9ece1304-496c-41a1-b558-7416ebb4b8c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Device.h">
+      <Filter>Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanContext.h">
+      <Filter>Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanInstance.h">
+      <Filter>Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="LightRenderer.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="LitMeshRenderer.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLoader.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AppValidationLayersAndExtensions.h">
+      <Filter>Vulkan</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GLEngine.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanContext.cpp">
+      <Filter>Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanInstance.cpp">
+      <Filter>Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="LightRenderer.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="LitMeshRenderer.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="AppValidationLayersAndExtensions.cpp">
+      <Filter>Vulkan</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GLEngine.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>헤더 파일</Filter>
+    </Text>
+    <Text Include="RenderPipeline.txt">
+      <Filter>GL</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
