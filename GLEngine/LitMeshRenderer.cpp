@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "ShaderLoader.h"
+﻿#include "ShaderLoader.h"
 #include "Camera.h"
 #include "LitMeshRenderer.h"
 #include "LightRenderer.h"

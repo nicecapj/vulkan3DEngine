@@ -1,13 +1,16 @@
-﻿#include "pch.h"
-#include "VulkanContext.h"
+﻿#include "VulkanContext.h"
 #include "Device.h"
+#include "VulkanInstance.h"
+#include "SwapChain.h"
+#include "DrawCommandBuffer.h"
+#include "Renderpass.h"
+#include "RenderTarget.h"
 
 VulkanContext* VulkanContext::instance = NULL;
 
 
 VulkanContext* VulkanContext::getInstance()
 {
-
     if (!instance)
     {
         instance = new VulkanContext();
@@ -17,7 +20,6 @@ VulkanContext* VulkanContext::getInstance()
 
 VulkanContext::~VulkanContext()
 {
-
     if (instance)
     {
         delete instance;
@@ -60,6 +62,17 @@ void VulkanContext::initVulkan(GLFWwindow* window)
 	swapChain_ = new SwapChain();
 	swapChain_->create(surface);
 
+	//랜더패스 생성
+	renderPass_ = new Renderpass();
+	renderPass_->createRenderPass(swapChain_->swapChainImageFormat);
+
+	//랜더타겟(이미지뷰)과 프레임버퍼 생성
+	renderTarget_ = new RenderTarget();
+	renderTarget_->createViewsAndFramebuffer(swapChain_->swapChainImages,
+		swapChain_->swapChainImageFormat,
+		swapChain_->swapChainImageExtent,
+		renderPass_->renderPass);
+
 	//드로우 커맨드 버퍼 생성
 	drawCommandBuffer_ = new DrawCommandBuffer();
 	drawCommandBuffer_->createCommandPoolAndBuffer(swapChain_->swapChainImages.size());
@@ -81,11 +94,20 @@ void VulkanContext::DrawBegin()
 	//커맨드 녹화시작
 	drawCommandBuffer_->beginCommandBuffer(currentCommandBuffer_);
 
+	VkClearValue clearcolor = { 1.0f, 0.0f, 0.0f, 1.0f };
+	std::array<VkClearValue, 1> clearValue = { clearcolor };
+	renderPass_->beginRenderPass(clearValue,
+		currentCommandBuffer_,
+		renderTarget_->swapChainFramebuffers[imageIndex_],
+		renderTarget_->_swapChainImageExtent);
 
 }
 
 void VulkanContext::DrawEnd()
 {
+	//랜더패스 끝
+	renderPass_->endRenderPass(currentCommandBuffer_);
+	
 	//커맨드 녹화 끝
 	drawCommandBuffer_->endCommandBuffer(currentCommandBuffer_);
 
@@ -119,11 +141,14 @@ void VulkanContext::CleanUp()
 {
 	//디바이스 사용이 끝날떄까지 대기
 	vkDeviceWaitIdle(device->logicalDevice);
-
+	
 	drawCommandBuffer_->destroy();
+	renderTarget_->destroy();
+	renderPass_->destroy();	
 	swapChain_->destroy();	
 	device->destroy();	
 	valLayersAndExt->destroy(vInstance->vkInstance, isValidationLayersEnabled);
+
 	vkDestroySurfaceKHR(vInstance->vkInstance, surface, nullptr);
 }
 

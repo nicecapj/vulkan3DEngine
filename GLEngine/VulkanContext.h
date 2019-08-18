@@ -6,10 +6,6 @@
 #include <vulkan\vulkan.h>
 
 #include "AppValidationLayersAndExtensions.h"
-#include "VulkanInstance.h"
-#include "Device.h"
-#include "SwapChain.h"
-#include "DrawCommandBuffer.h"
 
 
 #ifdef _DEBUG
@@ -34,7 +30,7 @@ public:
 	void DrawBegin();
 	void DrawEnd();
 	
-	Device* GetDevice();
+	class Device* GetDevice();
 
 	void CleanUp();
 
@@ -43,17 +39,20 @@ private:
     VkSurfaceKHR surface;	//플랫폼에 종속, 랜더링된 이미지를 그릴수 있는 표면	
 
     //문제발생시 체크용
-    AppValidationLayersAndExtensions *valLayersAndExt;
+    class AppValidationLayersAndExtensions *valLayersAndExt;
 
 	//실제 불칸인스턴스와 물리장치 접근 클래스(디바이스)
-    VulkanInstance* vInstance;
-    Device* device;
+    class VulkanInstance* vInstance;
+    class Device* device;
 
-	SwapChain* swapChain_;
+	class SwapChain* swapChain_;
 	uint32_t imageIndex_ = 0;
 
 	VkCommandBuffer currentCommandBuffer_;
-	DrawCommandBuffer* drawCommandBuffer_;
+	class DrawCommandBuffer* drawCommandBuffer_;
+
+	class Renderpass* renderPass_;
+	class RenderTarget* renderTarget_;
 };
 
 

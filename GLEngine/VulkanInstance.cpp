@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "VulkanInstance.h"
+﻿#include "VulkanInstance.h"
 
 VulkanInstance::VulkanInstance() {}
 

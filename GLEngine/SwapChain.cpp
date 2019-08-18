@@ -1,5 +1,5 @@
-#include "pch.h"
 #include "SwapChain.h"
+#include "Device.h"
 #include "VulkanContext.h"
 
 SwapChain::SwapChain(){}
@@ -32,6 +32,7 @@ void SwapChain::create(VkSurfaceKHR surface) {
 	createInfo.imageColorSpace = surfaceFormat.colorSpace;
 	createInfo.imageExtent = extent;
 	createInfo.imageArrayLayers = 1; // this is 1 unless you are making a stereoscopic 3D application
+								     //서페이스 수라고 보면 된다. 일반적인 경우는 1이면 됨. 가상현실은 2개 혼합임으로 2
 	createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
 	QueueFamilyIndices indices = VulkanContext::getInstance()->GetDevice()->getQueueFamiliesIndicesOfCurrentDevice();

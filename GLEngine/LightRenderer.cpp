@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "LightRenderer.h"
+﻿#include "LightRenderer.h"
 
 
 LightRenderer::LightRenderer(MeshType meshType, Camera* camera)

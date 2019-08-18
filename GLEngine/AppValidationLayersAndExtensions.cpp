@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "AppValidationLayersAndExtensions.h"
+﻿#include "AppValidationLayersAndExtensions.h"
 
 
 AppValidationLayersAndExtensions::AppValidationLayersAndExtensions() {}
