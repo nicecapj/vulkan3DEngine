@@ -51,12 +51,79 @@ void VulkanContext::initVulkan(GLFWwindow* window)
     }
 
     // PickPhysicalDevice and CreateLogicalDevice();
-    // 스왑체인을 하려면 물리디바이스가 필요하고, 물리디바이스에 실제 처리는 논리적으로, 논리디바이스로 접근한다.
-    //
+    // 스왑체인을 하려면 물리디바이스가 필요하고, 물리디바이스에 실제 처리는 논리적으로, 논리디바이스로 접근한다.    
     device = new Device();
     device->pickPhysicalDevice(vInstance, surface);
     device->createLogicalDevice(surface, isValidationLayersEnabled, valLayersAndExt);
 
+	//실제 이미지를 관리하는 스왑체인
+	swapChain_ = new SwapChain();
+	swapChain_->create(surface);
+
+	//드로우 커맨드 버퍼 생성
+	drawCommandBuffer_ = new DrawCommandBuffer();
+	drawCommandBuffer_->createCommandPoolAndBuffer(swapChain_->swapChainImages.size());
+
 }
 
+void VulkanContext::DrawBegin()
+{
+	//스왑체인에서 다음 이미지의 인덱스를 점유한다.
+	vkAcquireNextImageKHR(device->logicalDevice,
+		swapChain_->swapChain,
+		std::numeric_limits<uint64_t>::max(),
+		NULL, // is  signaled
+		VK_NULL_HANDLE,
+		&imageIndex_);
+
+	currentCommandBuffer_ = drawCommandBuffer_->commandBuffers[imageIndex_];
+
+	//커맨드 녹화시작
+	drawCommandBuffer_->beginCommandBuffer(currentCommandBuffer_);
+
+
+}
+
+void VulkanContext::DrawEnd()
+{
+	//커맨드 녹화 끝
+	drawCommandBuffer_->endCommandBuffer(currentCommandBuffer_);
+
+	//녹화한 커맨드를 커맨드 버퍼(그래픽스 큐)에 적용한다.
+	VkSubmitInfo submitInfo = {};
+	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	submitInfo.commandBufferCount = 1;
+	submitInfo.pCommandBuffers = &currentCommandBuffer_;
+	vkQueueSubmit(device->graphicsQueue, 1, &submitInfo, NULL);
+	
+	//프레임을 출력한다(Present Frame)		
+	//프레임에 커맨드큐의 커맨드가 랜더되면, 표시(present) 큐를 통해, 뷰포트에 표시(제시)된다.
+	//제시되는 동안, 이미지는 스왑체인의 백으로 이동한다.
+	VkPresentInfoKHR presentInfo = {};
+	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+	presentInfo.swapchainCount = 1;
+	presentInfo.pSwapchains = &swapChain_->swapChain;
+	presentInfo.pImageIndices = &imageIndex_;	
+	vkQueuePresentKHR(device->presentQueue, &presentInfo);
+	
+	//디바이스가 present를 완료할 동안 대기한다.	
+	vkQueueWaitIdle(device->presentQueue);
+}
+
+Device* VulkanContext::GetDevice()
+{
+	return device;
+}
+
+void VulkanContext::CleanUp()
+{
+	//디바이스 사용이 끝날떄까지 대기
+	vkDeviceWaitIdle(device->logicalDevice);
+
+	drawCommandBuffer_->destroy();
+	swapChain_->destroy();	
+	device->destroy();	
+	valLayersAndExt->destroy(vInstance->vkInstance, isValidationLayersEnabled);
+	vkDestroySurfaceKHR(vInstance->vkInstance, surface, nullptr);
+}
 

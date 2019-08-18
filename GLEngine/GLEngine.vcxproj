@@ -160,6 +160,7 @@
     <ClInclude Include="AppValidationLayersAndExtensions.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="DrawCommandBuffer.h" />
     <ClInclude Include="LightRenderer.h" />
     <ClInclude Include="LitMeshRenderer.h" />
     <ClInclude Include="Mesh.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="SwapChain.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="VulkanContext.h" />
@@ -176,6 +178,7 @@
     <ClCompile Include="AppValidationLayersAndExtensions.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DrawCommandBuffer.cpp" />
     <ClCompile Include="GLEngine.cpp" />
     <ClCompile Include="LightRenderer.cpp" />
     <ClCompile Include="LitMeshRenderer.cpp" />
@@ -188,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="VulkanContext.cpp" />

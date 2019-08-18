@@ -45,8 +45,9 @@ int main()
     glfwSetErrorCallback(&::ErrorFunction);
 
     glfwInit();
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	//https://www.glfw.org/docs/latest/window_guide.html
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);	//GLFW_CLIENT_API : opengl용 api사용하는지
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);		//GLFW_RESIZABLE : 윈도우 사이즈변경 가능한지
 
     GLFWwindow* window = glfwCreateWindow(1280, 720, "Vulkan Renderer", nullptr, nullptr);
 
@@ -62,15 +63,17 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        //RenderScene();
+		VulkanContext::getInstance()->DrawBegin();
 
+		//RenderScene();
+
+		VulkanContext::getInstance()->DrawEnd();		
         //glfwSwapBuffers(window);
+
         glfwPollEvents();
     }
-
-    //delete light;
-    //delete cam;
-
+    
+	VulkanContext::getInstance()->CleanUp();
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
